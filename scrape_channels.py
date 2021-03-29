@@ -1,4 +1,5 @@
 from selenium import webdriver
+import csv
 
 def createDriver():
     options = webdriver.ChromeOptions()
@@ -31,9 +32,20 @@ def scrapeVideos(browser, url, limit):
 # Create browser
 browser = createDriver()
 
-# Scrape the first 10 videos of FreeCodeCamp's channel
-url = "https://www.youtube.com/c/Freecodecamp/videos"
-scrapeVideos(browser, url, 10)
+# Operation for getting the data of multiple artists
+with open("channels.txt") as artistFile:
+    # Open the CSV
+    csv_reader = csv.reader(artistFile, delimiter=',')
+    line_count = 0
+    for row in csv_reader:
+        # Skip the headers line
+        if line_count == 0:
+            line_count += 1
+        else:
+            # Get the url
+            channelURL = row[1]
+            # Scrape the videos
+            scrapeVideos(browser, channelURL, 3)
 
 # Exit
 browser.quit()
