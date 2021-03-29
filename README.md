@@ -14,7 +14,7 @@ scrape_channels.py is a script that will get the latest videos of a YouTube chan
 
    Name,Channel <br />
    FreeCodeCamp,https://www.youtube.com/c/Freecodecamp/videos
-   Today,https://www.youtube.com/c/TODAY/videos
+   Today,https://www.youtube.com/c/TODAY/videos <br />
    TechWithTim,https://www.youtube.com/c/TechWithTim/videos
 
 5. Run python scrape_channels.py in your favorite command line interface.
