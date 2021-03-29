@@ -12,7 +12,7 @@ scrape_channels.py is a script that will get the latest videos of a YouTube chan
 
 4. The CSV file should look like this:
 
-   Name,Channel
+   Name,Channel <br />
    FreeCodeCamp,https://www.youtube.com/c/Freecodecamp/videos
    Today,https://www.youtube.com/c/TODAY/videos
    TechWithTim,https://www.youtube.com/c/TechWithTim/videos
