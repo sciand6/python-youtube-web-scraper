@@ -1,6 +1,6 @@
 # Scraping YouTube Channels
 
-scrape_channels.py is a script that will get the latest videos of a YouTube channel, and print them to the console.
+This is a script that will get the latest videos from a spreadsheet of YouTube channels, and writes them to a separate spreadsheet.
 
 # How To Use
 
@@ -21,5 +21,4 @@ scrape_channels.py is a script that will get the latest videos of a YouTube chan
 
 6. Run python scrape_channels.py in your favorite command line interface.
 
-You should see an output similar to this:
-![Example Output](https://github.com/sciand6/python-youtube-web-scraper/blob/main/example_output.png?raw=true)
+7. You should eventually see a videos.csv file in your project directory.
