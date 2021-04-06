@@ -1,5 +1,6 @@
 from selenium import webdriver
 import csv
+import os
 
 def createDriver():
     options = webdriver.ChromeOptions()
@@ -35,13 +36,65 @@ def scrapeVideos(browser, url, limit, arr):
         arr.append(video)
 
 def writeVideosToCsv(videos):
-    for video in videos:
-        title = video[0]
-        uploadDate = video[1]
-        href = video[2]
-        with open('videos.csv', mode='a', encoding='utf-8') as video_file:
+    with open('videos.csv', mode='w', encoding='utf-8') as video_file:
+        for video in videos:
+            title = video[0]
+            uploadDate = video[1]
+            href = video[2]
             video_file.write(title + "," + uploadDate + "," + href + "\n")
 
+def writeVideosToHTML(videos):
+    l = 0
+    # Generate intitial HTML
+    html = """
+    <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+            crossorigin="anonymous"
+            />
+            <title>Recent Uploads</title>
+        </head>
+        <body>
+        <div class="container">
+            <div class="d-flex justify-content-center mb-4">
+                <h1>Recent Uploads</h1>
+            </div>
+    """
+    with open('index.html', mode='w', encoding='utf-8') as html_file:
+        html_file.write(html)
+        for video in videos:
+            l = l + 1
+            title = video[0]
+            uploadDate = video[1]
+            href = video[2]
+            videoCard = f"""
+            <div class="card mt-4">
+                <div class="card-body">
+                <h4 class="card-title">{title}</h4>
+                <div class="card-subtitle text-muted mb-2">{uploadDate}</div>
+                <a href="{href}" class="btn btn-primary"
+                    >{href}</a
+                >
+                </div>
+            </div>
+            """
+            html_file.write(videoCard)
+        footer = """
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        html_file.write(footer)
+        html_file.close()
+        
 # Sorting
 def getLevel(uploadDate):
     if uploadDate == "minute":
@@ -95,6 +148,9 @@ def bubbleSortVideos(array):
 
 videos = []
 
+# Get user input
+videoCount = int(input("Enter how many videos you want to scrape per channel: "))
+
 # Create browser
 browser = createDriver()
 
@@ -111,12 +167,14 @@ with open("channels.txt") as artistFile:
             # Get the url
             channelURL = row[1]
             # Scrape the videos
-            scrapeVideos(browser, channelURL, 3, videos)
+            scrapeVideos(browser, channelURL, videoCount, videos)
 
 bubbleSortVideos(videos)
 writeVideosToCsv(videos)
+writeVideosToHTML(videos)
 
-print(videos)
+os.system("index.html")
 
 # Exit
 browser.quit()
+

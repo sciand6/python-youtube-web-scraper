@@ -15,10 +15,19 @@ This is a script that will get the latest videos from a spreadsheet of YouTube c
 5. The CSV file should look like this:
 
    Name,Channel <br />
-   FreeCodeCamp,https://www.youtube.com/c/Freecodecamp/videos
+   FreeCodeCamp,https://www.youtube.com/c/Freecodecamp/videos <br />
    Today,https://www.youtube.com/c/TODAY/videos <br />
-   TechWithTim,https://www.youtube.com/c/TechWithTim/videos
+   TechWithTim,https://www.youtube.com/c/TechWithTim/videos <br />
 
 6. Run python scrape_channels.py in your favorite command line interface.
 
-7. You should eventually see a videos.csv file in your project directory.
+7. Enter how many videos you'd like to scrape per channel.
+
+8. You should eventually see a videos.csv, and an index.html file should open up.
+
+Your HTML file should look similar to this:
+![Example Output](https://github.com/sciand6/python-youtube-web-scraper/blob/main/example_output.png?raw=true)
+
+# Add as many channels as you wish
+
+Add your favorite youtube channels using the format listed in step 5, and continue growing your list.
