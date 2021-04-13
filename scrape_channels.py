@@ -5,6 +5,7 @@ import os
 def createDriver():
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    options.add_argument('headless')
     browser = webdriver.Chrome(options=options)
     return browser
 
@@ -146,35 +147,37 @@ def bubbleSortVideos(array):
 
     return array
 
-videos = []
+def main(count):
+    videos = []
 
-# Get user input
-videoCount = int(input("Enter how many videos you want to scrape per channel: "))
+    # Get user input
+    videoCount = count
 
-# Create browser
-browser = createDriver()
+    # Create browser
+    browser = createDriver()
 
-# Operation for getting the data of multiple artists
-with open("channels.txt") as artistFile:
-    # Open the CSV
-    csv_reader = csv.reader(artistFile, delimiter=',')
-    line_count = 0
-    for row in csv_reader:
-        # Skip the headers line
-        if line_count == 0:
-            line_count += 1
-        else:
-            # Get the url
-            channelURL = row[1]
-            # Scrape the videos
-            scrapeVideos(browser, channelURL, videoCount, videos)
+    # Operation for getting the data of multiple artists
+    with open("channels.txt") as artistFile:
+        # Open the CSV
+        csv_reader = csv.reader(artistFile, delimiter=',')
+        line_count = 0
+        for row in csv_reader:
+            # Skip the headers line
+            if line_count == 0:
+                line_count += 1
+            else:
+                # Get the url
+                channelURL = row[1]
+                # Scrape the videos
+                scrapeVideos(browser, channelURL, videoCount, videos)
 
-bubbleSortVideos(videos)
-writeVideosToCsv(videos)
-writeVideosToHTML(videos)
+    bubbleSortVideos(videos)
+    writeVideosToCsv(videos)
+    writeVideosToHTML(videos)
 
-os.system("index.html")
+    os.system("index.html")
 
-# Exit
-browser.quit()
+    # Exit
+    browser.quit()
 
+main(2)
