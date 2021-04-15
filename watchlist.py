@@ -10,7 +10,67 @@ class Video:
     def __str__(self):
         return f'{self.title}, {self.url}, {self.uploadDate}'
 
-    
+class Writer:
+    def __init__(self, videos):
+        self.videos = videos
+
+    def writeVideosToCsv(self, csvFile):
+        with open(csvFile, mode='w', encoding='utf-8') as video_file:
+            for vid in self.videos:
+                title = vid.title
+                uploadDate = vid.uploadDate
+                url = vid.url
+                video_file.write(title + "," + uploadDate + "," + url + "\n")
+
+    def writeVideosToHTML(self, htmlFile):
+        html = """
+        <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <link
+                href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+                rel="stylesheet"
+                integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+                crossorigin="anonymous"
+                />
+                <title>Recent Uploads</title>
+            </head>
+            <body>
+            <div class="container">
+                <div class="d-flex justify-content-center mb-4">
+                    <h1>Watchlist</h1>
+                </div>
+        """
+        with open(htmlFile, mode='w', encoding='utf-8') as html_file:
+            html_file.write(html)
+            for vid in self.videos:
+                title = vid.title
+                uploadDate = vid.uploadDate
+                url = vid.url
+                videoCard = f"""
+                <div class="card mt-4">
+                    <div class="card-body">
+                    <h4 class="card-title">{title}</h4>
+                    <div class="card-subtitle text-muted mb-2">{uploadDate}</div>
+                    <a href="{url}" class="btn btn-primary"
+                        >Watch</a
+                    >
+                    </div>
+                </div>
+                """
+                html_file.write(videoCard)
+            footer = """
+                    </div>
+                </div>
+            </body>
+            </html>
+            """
+            html_file.write(footer)
+            html_file.close()
+
 class Scraper:
     def __init__(self, videoCSV, count):
         self.videoCSV = videoCSV

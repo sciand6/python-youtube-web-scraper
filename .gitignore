@@ -3,6 +3,5 @@ env
 chromedriver.exe
 channels.txt
 todo.txt
-t.py
 videos.csv
 index.html
